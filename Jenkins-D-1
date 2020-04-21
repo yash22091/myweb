@@ -22,12 +22,14 @@ pipeline {
         //https://plugins.jenkins.io/ssh-agent/ plugin
         // Enter private ip
         stage("Deploy-dev") {
+           steps {
             sshagent(['tomcat-dev']) {
             sh """
                scp -o StrictHostKeyChecking=no target/myweb.war ubuntu@172.31.47.124: /opt/tomcat/webapps/
                ssh ubuntu@172.31.47.124 /opt/tomcat/bin/shutdown.sh
                ssh ubuntu@172.31.47.124 /opt/tomcat/bin/startup.sh
             """
+           }
           }
         }
     }
