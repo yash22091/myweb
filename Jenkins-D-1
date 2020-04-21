@@ -1,10 +1,34 @@
 pipeline {
     agent any
+    
+    /*environment {
+    
+    }*/
     stages {
         stage("Build") {
             steps {
                 git 'https://github.com/aditya-malviya/myweb.git'
             }
+        }
+        
+        //https://plugins.jenkins.io/pipeline-maven/ plugin
+        stage("Maven Build") {
+            steps {
+               sh "mvn clean package"
+               sh "mv target/*.war .target/myweb.war"
+            }
+        }
+        
+        //https://plugins.jenkins.io/ssh-agent/ plugin
+        // Enter private ip
+        stage("Deploy-dev") {
+            sshagent(['tomcat-dev']) {
+            sh """
+               scp -o StrictHostKeyChecking=no target/myweb.war ubuntu@172.31.47.124: /opt/tomcat/webapps/
+               ssh ubuntu@172.31.47.124 /opt/tomcat/bin/shutdown.sh
+               ssh ubuntu@172.31.47.124 /opt/tomcat/bin/startup.sh
+            """
+          }
         }
     }
 }
