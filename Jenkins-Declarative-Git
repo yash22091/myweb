@@ -3,9 +3,10 @@ currentBuild.displayName = "online-shopping-#"+currentBuild.number
 pipeline{
     agent any
     
-    environment{
-        PATH = "/opt/maven3/bin:$PATH"
-    }
+    //environment{
+    //    PATH = "/opt/maven3/bin:$PATH"
+    // }
+    
     stages{
         stage("Git Checkout"){
             steps{
@@ -20,7 +21,7 @@ pipeline{
         }
         stage("deploy-dev"){
             steps{
-                sshagent(['tomcat-new']) {
+                sshagent(['tomcat-dev']) {
                 sh """
                     scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@172.31.5.176:/opt/tomcat8/webapps/
                     
