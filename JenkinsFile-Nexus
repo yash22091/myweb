@@ -13,7 +13,7 @@ pipeline{
                 sh "mv target/*.war target/myweb.war"
             }
         }
-       */ stage("Upload war file to nexus"){
+       /* stage("Upload war file to nexus"){
             steps{
                nexusArtifactUploader artifacts: [
                 [
@@ -31,6 +31,6 @@ pipeline{
                 repository: 'http://13.127.1.110:8081/#admin/repository/repositories:simple-web-app', 
                 version: '1.0.0'
             }
-        }/*
+        }*/
     }
 }
