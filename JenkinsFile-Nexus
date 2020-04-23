@@ -1,0 +1,36 @@
+pipeline{
+    agent any
+    
+    stages{
+        stage("Git Checkout"){
+            steps{
+                git credentialsId: 'github', url: 'https://github.com/aditya-malviya/myweb.git'
+            }
+        }
+        stage("Maven Build"){
+            steps{
+                sh "mvn clean package"
+                sh "mv target/*.war target/myweb.war"
+            }
+        }
+        stage("Upload war file to nexus"){
+            steps{
+               nexusArtifactUploader artifacts: [
+                [
+                  artifactId: 'myweb', 
+                  classifier: '', 
+                  file: 'target/Java-Home-myweb-1.0.0.war', 
+                  type: 'war'
+                  ]
+                 ], 
+                credentialsId: 'admin-nexus', 
+                groupId: 'in.javahome', 
+                nexusUrl: '172.31.38.108"8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'http://13.127.1.110:8081/#admin/repository/repositories:simple-web-app', 
+                version: '1.0.0'
+            }
+        }
+    }
+}
