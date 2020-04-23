@@ -5,7 +5,7 @@
 	<artifactId>myweb</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>Java Home myweb</name>
+	<name>Java-Home-myweb</name>
 	<url>http://maven.apache.org</url>
 	
 	
