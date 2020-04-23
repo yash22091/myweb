@@ -19,7 +19,7 @@ pipeline{
                 [
                   artifactId: 'myweb', 
                   classifier: '', 
-                  file: 'target/Java-Home-myweb-1.0.0.war', 
+                  file: 'target/myweb.war', 
                   type: 'war'
                   ]
                  ], 
